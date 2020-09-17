@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Quiz</title>
+
+    <!-- Added link to the jQuery Library and external js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./Assets.js.js"></script>
+
+    <!-- Added a link to Bootstrap and external CSS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./Assets/css/style.css">
+</head>
+
+<body>
+
+    <div class="jumbotron">
+        <h1 class="text-center">Coding Quiz</h1>
+        <h3 class="text-center margin-50">There are 10 questions. You have 75 seconds to complete the quiz. Each wrong
+            choice will cost you 10 seconds.</h3>
+    </div>
+
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-2">
+                    <h3 class="card-header">Question</h3>
+                    <div class="card-body text-center">
+                        <h1 id="question"></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-2">
+                    <h3 class="card-header">Choices</h3>
+                    <div class="card-body text-left">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button id="choice-a" class="btn btn-primary btn-choice" value="a">
+                                    <h1></h1>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button id="choice-b" class="btn btn-primary btn-choice" value="b">
+                                    <h1></h1>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button id="choice-c" class="btn btn-primary btn-choice" value="c">
+                                    <h1></h1>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button id="choice-d" class="btn btn-primary btn-choice" value="d">
+                                    <h1></h1>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-2">
+                    <h3 class="card-header">Result</h3>
+                    <div class="card-body text-center">
+                        <h1 id="result"></h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
