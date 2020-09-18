@@ -15,7 +15,7 @@
 </head>
 
 <body>
-
+    <!-- This it the main message board for the page. The message and button will disappear once the start button is pressed.   -->
     <div class="jumbotron">
         <header class="text-right" id="timer"></header>
         <h1 class="text-center">Coding Quiz Challenge</h1>
@@ -24,8 +24,10 @@
         <div class="text-center"><button class="btn btn-primary text-center" id="btn-start">Start</button></div>
     </div>
 
+    <!-- This is the main container for the page. All other elements besides the jumbotron are contained within this -->
     <div class="container">
-
+        <!-- This is the question section. It will display the question to be answered -->
+        <!-- Once the quiz is completed, this div displays the final score. -->
         <div id="question-div" class="row hidden">
             <div class="col-md-12">
                 <div class="card mb-2">
@@ -37,6 +39,8 @@
             </div>
         </div>
 
+        <!-- This is where the choices are duisplayed. When clicked, these buttons trigger the main code. -->
+        <!-- Once the quiz is completed, the div is hidden. -->
         <div id="choices-div" class="row hidden">
             <div class="col-md-12">
                 <div class="card mb-2">
@@ -75,6 +79,8 @@
             </div>
         </div>
 
+        <!-- This is where the result of the individual question will be displayed. -->
+        <!-- Once the quiz is completed, the div is hidden. -->
         <div id="result-div" class="row hidden">
             <div class="col-md-12">
                 <div class="card mb-2">
@@ -86,6 +92,8 @@
             </div>
         </div>
 
+        <!-- This is where the user will enter his/her initials after completing the quiz -->
+        <!-- This section is hidden until the quiz is completed. -->
         <div id="input-div" class="row hidden">
             <div class="col-md-12">
                 <div class="card mb-2">
@@ -98,13 +106,15 @@
             </div>
         </div>
 
+        <!-- This is where the list of results is shown, plus the bottons to reset the quiz and clear the scores -->
+        <!-- This section is hidden until the quiz is completed. -->
         <div id="display-div" class="row hidden">
             <div class="col-md-12">
                 <div class="card mb-2">
                     <h4 class="card-header">High Scores</h4>
-                    <div id="highScoreList">                       
+                    <div class = "center" id="highScoreList">                       
                     </div>
-                    <div>
+                    <div class="center">
                         <button class="btn btn-primary" id="go-back">Go Back</button>
                         <button class="btn btn-primary" id="clear-scores">Clear Scores</button>
                     </div>
@@ -115,94 +125,124 @@
     </div>
 
     <script type="text/javascript">
+        // Overall wrapper for the document.ready
         $(document).ready(function () {
 
+            // declaration of all variables used, including the list of questions
             var qCount = 0;
-            var qTotal = 2; 
-            var correct = 0;
+            // qTotal is set at 10. A better approach would be to just use questions.length as the target
+            var qTotal = 10; 
+            // The initial timer is set to 75 seconds
             var timeLeft = 75;
             var finalTime;
             var questions = [
                 {
-                    title: "This is question 1",
-                    choices: ["A", "B", "C", "D"],
+                    title: "What tag is used to define the bottom section (footer) of an HTML document?",
+                    choices: ["<footer>", "<h1> to <h6>", "<td>", "<button>"],
                     answer: "a"
                 }, 
                 {
-                    title: "This is question 2",
-                    choices: ["A", "B", "C", "D"],
+                    title: "What declaration MUST be included as the first item in an HTML document before the tag and is used to provide instructions to the web browser?",
+                    choices: ["<embed>", "<code>", "<!DOCTYPE>", "<caption>"],
+                    answer: "c"
+                },
+                {
+                    title: "What group of tags are used to define the text headers in the body of the HTML document?",
+                    choices: ["<button>", "<td>", "<h1> to <h6>", "<footer>"],
+                    answer: "c"
+                },
+                {
+                    title: "What tag can be used to insert a line break or blank line in an HTML document?",
+                    choices: ["<title></title>", "<head></head>", "<body></body>", "<br></br>"],
+                    answer: "d"
+                },
+                {
+                    title: "What tag is used to define an unordered list that is bulleted?",
+                    choices: ["<u>", "<li>", "<s>", "<ul>"],
+                    answer: "d"
+                },
+                {
+                    title: "What tag is used to define an image – or add an image – to an HTML page?",
+                    choices: ["<table>", "<meta>", "<div>", "<img>"],
+                    answer: "d"
+                },
+                {
+                    title: "What tag is used to define an interactive field where users can enter data?",
+                    choices: ["<datalist>", "<enterpoint>", "<input>", "<dialog>"],
+                    answer: "c"
+                },
+                {
+                    title: "What tag is used to define the metadata about an HTML document, and must always be included inside the element?",
+                    choices: ["<table>", "<img>", "<div>", "<meta>"],
+                    answer: "d"
+                },
+                {
+                    title: "What element is a container for all the head elements, and may include the document title, scripts, styles, meta information, and more?",
+                    choices: ["<head></head>", "<body></body>", "<title></title>", "<br></br>"],
                     answer: "a"
                 },
                 {
-                    title: "This is question 3",
-                    choices: ["A", "B", "C", "D"],
-                    answer: "a"
-                },
-                {
-                    title: "This is question 4",
-                    choices: ["A", "B", "C", "D"],
-                    answer: "a"
-                },
-                {
-                    title: "This is question 5",
-                    choices: ["A", "B", "C", "D"],
-                    answer: "a"
-                },
-                {
-                    title: "This is question 6",
-                    choices: ["A", "B", "C", "D"],
-                    answer: "a"
-                },
-                {
-                    title: "This is question 7",
-                    choices: ["A", "B", "C", "D"],
-                    answer: "a"
-                },
-                {
-                    title: "This is question 8",
-                    choices: ["A", "B", "C", "D"],
-                    answer: "a"
-                },
-                {
-                    title: "This is question 9",
-                    choices: ["A", "B", "C", "D"],
-                    answer: "a"
-                },
-                {
-                    title: "This is question 10",
-                    choices: ["A", "B", "C", "D"],
-                    answer: "a"
+                    title: "What tag defines the body of the HTML document, and usually includes all the contents such as the text, hyperlinks, images, tables, lists, and more?",
+                    choices: ["<head></head>", "<body></body>", "<br></br>", "<title></title>"],
+                    answer: "b"
                 }
             ]
             var initials;
 
+            // Event listener of the start button
             $("#btn-start").on("click", function() {
+
+                // loads the first question onto the page 
                 printQuestions(0);
-                timeLeft = 75;
+
+                // sets the initial timer display
                 $("#timer").text("Time left: " + timeLeft);
+
+                // calls upon the setTime function to activate the timer
                 setTime();
+
+                // updating the dom by showing and hiding the necessary elements
                 $("#question-div").removeClass("hidden");
                 $("#choices-div").removeClass("hidden");
                 $("#result-div").removeClass("hidden");
                 $("#btn-start").addClass("hidden");
+                $("#msg-block").text("");
             });
+
+            // Event listener for the user choice for each answer
             $(".btn-choice").on("click", function () {
+
+                // Gets the users choice
                 var userChoice = $(this).val();
+
+                // Checking to see if the user choice is the correct answer. 
                 if (userChoice === questions[qCount].answer) {
+
+                    // Tells the user the answer is correct, and updates the question count.
                     $("#result").text("Correct");
                     qCount++;
+
+                    // If the count is less than the total questions, the next question will be loaded.
+                    // Otherwise the showResults function will be called.
                     if (qCount < qTotal) {
                         printQuestions(qCount);
                     } else {
                         finalTime = timeLeft;
                         showResults(); 
                     }                    
-                } else {
+                } 
+                
+                    // if the answer was incorrect, the message is displayed and 10 seconds are removed. 
+                    else {
                     timeLeft = timeLeft - 10;
                     $("#result").text("Sorry, try again.");
                 }
             });
+
+            // Event listener for submitting the user's initials
             $("#submit-initials").on("click", function () {               
+            
+                // Verifying that initials were entered. 
                 if (!$("#initials").val()) {
                     alert("Please enter your initials");
                     return;
@@ -211,13 +251,19 @@
                     printResults();                    
                 }
             });
+
+            // Go back button to refresh the page
             $("#go-back").on("click", function () {
                 location.reload();
             });
-            $("clear-scores").on("click", function () {
 
+            // Event listener to clear the high scores from local storage.
+            $("#clear-scores").on("click", function () {
+                localStorage.clear();
+                $("#highScoreList").empty();
             });
 
+            // Function to print the questions and answers to the screen.
             function printQuestions(qNum) {
                 $("#question").text(questions[qNum].title);
                 $("#choice-a").text(questions[qNum].choices[0]);
@@ -225,43 +271,60 @@
                 $("#choice-c").text(questions[qNum].choices[2]);
                 $("#choice-d").text(questions[qNum].choices[3]);
             }
+
+            // Function to control the timer.
             function setTime() {
                 var timerInterval = setInterval(function() {
                     timeLeft--;
                     $("#timer").text("Time left: " + timeLeft);
 
+                    // There are two cases when the game is over. Either the user runs out of time, or correctly answers all questions.
+                    // The interval needs to be cleared in either situation.
                     if (timeLeft <= 0) {
-                        finalTime = 0;
-                        $("#timer").text("");
                         clearInterval(timerInterval);
+                        finalTime = 0;
+                        $("#timer").text("");                        
                         showResults();
                     }
 
                     if (qCount >= qTotal) {
-                        $("#timer").text("");
-                        clearInterval(timerInterval);                        
+                        clearInterval(timerInterval); 
+                        $("#timer").text("");                    
                     }
 
                 }, 1000);
             }
+            
+            // Function to display the results. The different divs and headers are displayed
             function showResults() {
                 $("#choices-div").addClass("hidden");
                 $("#result-div").addClass("hidden");
                 $("#question-header").text("All done!");
-                $("#question").text("Your final score is: " + timeLeft);
+                $("#question").text("Your final score is: " + finalTime);
                 $("#input-div").removeClass("hidden");
             }
+            
+            // Function to print the results to local storage and also to the page
             function printResults() {
+
+                // Updates the dom to display the correct items on the page
                 $("#input-div").addClass("hidden");
                 $("#question-div").addClass("hidden");
                 $("#display-div").removeClass("hidden");
 
+                // Getting the high score from local storage for that user.
                 var highScore = localStorage.getItem(initials);
-                if (!highScore || (highScore < timeLeft)){
-                    localStorage.setItem(initials, timeLeft);
+
+                // If the high score does not exist, or is less than the new score, it is updated.
+                if (!highScore || (highScore < finalTime)){
+                    localStorage.setItem(initials, finalTime);
                 }
-                
-                $(#highScoreList).append()
+
+                // Printing the list of high scores to the page. 
+                // Ideally this should be sorted into decending order.
+                for (let [key, value] of Object.entries(localStorage)) {
+                    $("#highScoreList").append("<h3>" + key + ": " + value + "</h3>")
+                }
 
                }
 
