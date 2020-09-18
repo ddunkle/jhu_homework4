@@ -17,10 +17,11 @@
 <body>
 
     <div class="jumbotron">
-        <header class="text-right" id="timer">Time:</header>
-        <h1 class="text-center">Coding Quiz</h1>
-        <h3 class="text-center margin-50">There are 10 questions. You have 75 seconds to complete the quiz. Each wrong
-            choice will cost you 10 seconds.</h3>
+        <header class="text-right" id="timer"></header>
+        <h1 class="text-center">Coding Quiz Challenge</h1>
+        <h4 id="msg-block" class="text-center margin-50">There are 10 questions. You have 75 seconds to complete the quiz. Each wrong
+            choice will cost you 10 seconds. Click below to start the quiz.</h4>
+        <div class="text-center"><button class="btn btn-primary text-center" id="btn-start">Start</button></div>
     </div>
 
     <div class="container">
@@ -28,7 +29,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="card mb-2">
-                    <h3 class="card-header">Question</h3>
+                    <h4 id="question-header" class="card-header">Question</h4>
                     <div class="card-body text-center">
                         <h4 id="question"></h4>
                     </div>
@@ -36,34 +37,34 @@
             </div>
         </div>
 
-        <div class="row">
+        <div id="choices" class="row">
             <div class="col-md-12">
                 <div class="card mb-2">
-                    <h3 class="card-header">Choices</h3>
+                    <h4 class="card-header">Choices</h4>
                     <div class="card-body text-left">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 choice">
                                 <button id="choice-a" class="btn btn-primary btn-choice" value="a">
                                     <h1></h1>
                                 </button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 choice">
                                 <button id="choice-b" class="btn btn-primary btn-choice" value="b">
                                     <h1></h1>
                                 </button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 choice">
                                 <button id="choice-c" class="btn btn-primary btn-choice" value="c">
                                     <h1></h1>
                                 </button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 choice">
                                 <button id="choice-d" class="btn btn-primary btn-choice" value="d">
                                     <h1></h1>
                                 </button>
@@ -74,12 +75,24 @@
             </div>
         </div>
 
-        <div class="row">
+        <div id="result-row" class="row">
             <div class="col-md-12">
                 <div class="card mb-2">
-                    <h3 class="card-header">Result</h3>
+                    <h4 class="card-header">Result</h4>
                     <div class="card-body text-center">
                         <h4 id="result"></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="form-row" class="row">
+            <div class="col-md-12">
+                <div class="card mb-2">
+                    <h4 class="card-header">Enter Initials</h4>
+                    <div>
+                        <input type="text" id="initials">
+                        <button class="btn btn-primary" id="submit-initials">Submit</button>
                     </div>
                 </div>
             </div>
@@ -147,12 +160,15 @@
                     answer: "a"
                 }
             ]
-            printQuestions(qCount);
-            $("#timer").text("Time left: " + timeLeft);
-            setTime();
             
-
-
+            $("#btn-start").on("click", function() {
+                printQuestions(0);
+                timeLeft = 75;
+                $("#timer").text("Time left: " + timeLeft);
+                setTime();
+                $(".choice").css("display", "inline-block");
+                $("#btn-start").addClass("hidden");
+            });
             $(".btn-choice").on("click", function () {
                 var userChoice = $(this).val();
                 if (userChoice === questions[qCount].answer) {
@@ -167,10 +183,17 @@
                 } else {
                     timeLeft = timeLeft - 10;
                     $("#result").text("Sorry, try again.");
-                    //$("#timer").text("Time left: " + timeLeft);
                 }
             });
-
+            $("#submit-initials").on("click", function () {                
+                if (!$("#submit-initials").val()) {
+                    alert("Please enter your initials");
+                    console.log($("#submit-initials").val());
+                    return;
+                } else {
+                    
+                }
+            });
             
             function printQuestions(qNum) {
                 $("#question").text(questions[qNum].title);
@@ -186,16 +209,28 @@
 
                     if (timeLeft <= 0) {
                         finalTime = 0;
+                        $("#timer").text("");
                         clearInterval(timerInterval);
                         showResults();
                     }
+
+                    if (qCount >= qTotal) {
+                        $("#timer").text("");
+                        clearInterval(timerInterval);                        
+                    }
+
                 }, 1000);
             }
             function showResults() {
-                console.log("This is the end");
-                console.log("You completed this in: " + (75 - finalTime) + " seconds.")
-                console.log("You successfully completed " + (qCount + 1) + " questions.")
+                $(".btn-choice").css("display", "none");
+                $("#question-header").text("All done!");
+                $("#question").text("Your final score is: " + timeLeft);
+                $("#result-row").addClass("hidden");
+                $("#choices").addClass("hidden");
+
+
             }
+            
         });
 
 
