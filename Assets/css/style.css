@@ -15,9 +15,10 @@
     border-radius:.3rem
 }
 
-.choice, .hidden {
+.hidden {
     display: none;
 }
+
     
 @media (min-width:576px) {
     .jumbotron{padding:2rem 1rem}}

@@ -26,7 +26,7 @@
 
     <div class="container">
 
-        <div class="row">
+        <div id="question-div" class="row hidden">
             <div class="col-md-12">
                 <div class="card mb-2">
                     <h4 id="question-header" class="card-header">Question</h4>
@@ -37,34 +37,34 @@
             </div>
         </div>
 
-        <div id="choices" class="row">
+        <div id="choices-div" class="row hidden">
             <div class="col-md-12">
                 <div class="card mb-2">
                     <h4 class="card-header">Choices</h4>
                     <div class="card-body text-left">
                         <div class="row">
-                            <div class="col-md-12 choice">
+                            <div class="col-md-12">
                                 <button id="choice-a" class="btn btn-primary btn-choice" value="a">
                                     <h1></h1>
                                 </button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 choice">
+                            <div class="col-md-12">
                                 <button id="choice-b" class="btn btn-primary btn-choice" value="b">
                                     <h1></h1>
                                 </button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 choice">
+                            <div class="col-md-12">
                                 <button id="choice-c" class="btn btn-primary btn-choice" value="c">
                                     <h1></h1>
                                 </button>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 choice">
+                            <div class="col-md-12">
                                 <button id="choice-d" class="btn btn-primary btn-choice" value="d">
                                     <h1></h1>
                                 </button>
@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <div id="result-row" class="row">
+        <div id="result-div" class="row hidden">
             <div class="col-md-12">
                 <div class="card mb-2">
                     <h4 class="card-header">Result</h4>
@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <div id="form-row" class="row">
+        <div id="input-div" class="row hidden">
             <div class="col-md-12">
                 <div class="card mb-2">
                     <h4 class="card-header">Enter Initials</h4>
@@ -98,13 +98,27 @@
             </div>
         </div>
 
+        <div id="display-div" class="row hidden">
+            <div class="col-md-12">
+                <div class="card mb-2">
+                    <h4 class="card-header">High Scores</h4>
+                    <div id="highScoreList">                       
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" id="go-back">Go Back</button>
+                        <button class="btn btn-primary" id="clear-scores">Clear Scores</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script type="text/javascript">
         $(document).ready(function () {
 
             var qCount = 0;
-            var qTotal = 10; 
+            var qTotal = 2; 
             var correct = 0;
             var timeLeft = 75;
             var finalTime;
@@ -160,13 +174,16 @@
                     answer: "a"
                 }
             ]
-            
+            var initials;
+
             $("#btn-start").on("click", function() {
                 printQuestions(0);
                 timeLeft = 75;
                 $("#timer").text("Time left: " + timeLeft);
                 setTime();
-                $(".choice").css("display", "inline-block");
+                $("#question-div").removeClass("hidden");
+                $("#choices-div").removeClass("hidden");
+                $("#result-div").removeClass("hidden");
                 $("#btn-start").addClass("hidden");
             });
             $(".btn-choice").on("click", function () {
@@ -185,16 +202,22 @@
                     $("#result").text("Sorry, try again.");
                 }
             });
-            $("#submit-initials").on("click", function () {                
-                if (!$("#submit-initials").val()) {
+            $("#submit-initials").on("click", function () {               
+                if (!$("#initials").val()) {
                     alert("Please enter your initials");
-                    console.log($("#submit-initials").val());
                     return;
                 } else {
-                    
+                    initials = $("#initials").val().trim().toUpperCase();
+                    printResults();                    
                 }
             });
-            
+            $("#go-back").on("click", function () {
+                location.reload();
+            });
+            $("clear-scores").on("click", function () {
+
+            });
+
             function printQuestions(qNum) {
                 $("#question").text(questions[qNum].title);
                 $("#choice-a").text(questions[qNum].choices[0]);
@@ -222,15 +245,26 @@
                 }, 1000);
             }
             function showResults() {
-                $(".btn-choice").css("display", "none");
+                $("#choices-div").addClass("hidden");
+                $("#result-div").addClass("hidden");
                 $("#question-header").text("All done!");
                 $("#question").text("Your final score is: " + timeLeft);
-                $("#result-row").addClass("hidden");
-                $("#choices").addClass("hidden");
-
-
+                $("#input-div").removeClass("hidden");
             }
-            
+            function printResults() {
+                $("#input-div").addClass("hidden");
+                $("#question-div").addClass("hidden");
+                $("#display-div").removeClass("hidden");
+
+                var highScore = localStorage.getItem(initials);
+                if (!highScore || (highScore < timeLeft)){
+                    localStorage.setItem(initials, timeLeft);
+                }
+                
+                $(#highScoreList).append()
+
+               }
+
         });
 
 
